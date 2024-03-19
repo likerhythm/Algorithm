@@ -14,20 +14,11 @@ while q:
     dn, dm = move[i]
     nxtN, nxtM = n + dn, m + dm
     if 0 <= nxtN < N and 0 <= nxtM < M:
-      #벽을 만난 경우
-      if graph[nxtN][nxtM] == '1':
-        if broken[nxtN][nxtM] <= broken[n][m] + 1:
-          continue
-        else:
-          broken[nxtN][nxtM] = broken[n][m] + 1
-          q.append((nxtN, nxtM))
-      #빈 방인 경우
+      if broken[nxtN][nxtM] <= broken[n][m] + int(graph[nxtN][nxtM]):
+        continue
       else:
-        if broken[nxtN][nxtM] <= broken[n][m]:
-          continue
-        else:
-          broken[nxtN][nxtM] = broken[n][m]
-          q.append((nxtN, nxtM))
+        broken[nxtN][nxtM] = broken[n][m] + int(graph[nxtN][nxtM])
+        q.append((nxtN, nxtM))
 
 # for i in range(N):
 #   print(broken[i])
