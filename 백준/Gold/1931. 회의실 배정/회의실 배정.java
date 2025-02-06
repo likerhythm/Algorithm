@@ -5,6 +5,11 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 // 회의실 배정, 제출 ~2시
+// 시작 시간으로 정렬하지 않을 때 반례
+// 3
+// 2 2
+// 1 2
+// 2 3
 public class Main {
 
     static int N;
@@ -24,6 +29,8 @@ public class Main {
         run();
     }
 
+    // 1. 회의가 빠르게 끝나야 다음 회의를 진행할 수 있으므로 회의가 끝나는 시간 순으로 정렬
+    // 2. 다음에 진행 가능한 회의 중 가장 빠른 회의를 찾기 위해 회의가 시작하는 시간 순으로 정렬
     private static void run() {
         // [회의 정렬]
         // 회의가 시작하는 시간이 빠른 순서대로 meetings 요소 정렬
