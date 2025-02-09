@@ -45,7 +45,6 @@ public class Main {
                 }
             }
         }
-//        printIces();
 
         int year = 0;
         while (!isSeparated()) {
@@ -72,10 +71,6 @@ public class Main {
             ocean = tempOcean;
             ices.removeAll(melt);
             year++;
-//            System.out.println("melt");
-//            System.out.println(melt);
-//            printIces();
-//            printOcean();
         }
 
         if (ices.size() == 0) {
@@ -83,21 +78,6 @@ public class Main {
             return;
         }
         System.out.println(year);
-    }
-
-    private static void printIces() {
-        System.out.println("ices");
-        System.out.println(ices);
-    }
-
-    private static void printOcean() {
-        for (int[] oc : ocean) {
-            for (int o : oc) {
-                System.out.print(o + " ");
-            }
-            System.out.println();
-        }
-        System.out.println();
     }
 
     private static boolean isSeparated() {
@@ -139,9 +119,5 @@ public class Main {
                 visited[nn][nm] = true;
             }
         }
-    }
-
-    private static boolean inRange(int n, int m) {
-        return 0 <= n && n < N && 0 <= m && m < M;
     }
 }
