@@ -1,22 +1,20 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.Comparator;
+import java.util.*;
 
 public class Main {
 
     static int V; // 정점의 개수
     static int E; // 간선의 개수
-    static Edge[] edges;
-    static int[] parent;
+    static List<Edge>[] edges;
+    static boolean[] visited;
 
     static class Edge {
-        int node1, node2, w;
+        int to, w;
 
-        Edge(int node1, int node2, int w) {
-            this.node1 = node1;
-            this.node2 = node2;
+        Edge(int to, int w) {
+            this.to = to;
             this.w = w;
         }
     }
@@ -28,11 +26,12 @@ public class Main {
         V = input[0];
         E = input[1];
 
-        edges = new Edge[E];
-        parent = new int[V + 1];
-        for (int i=1; i<=V; i++) {
-            parent[i] = i;
+        edges = new List[V+1];
+        for (int i=0; i<V+1; i++) {
+            edges[i] = new ArrayList<>();
         }
+
+        visited = new boolean[V + 1];
 
         for (int i=0; i<E; i++) {
             input = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
@@ -40,48 +39,39 @@ public class Main {
             int node2 = input[1];
             int w = input[2];
 
-            edges[i] = new Edge(node1, node2, w);
+            edges[node1].add(new Edge(node2, w));
+            edges[node2].add(new Edge(node1, w));
         }
 
-        Arrays.sort(edges, Comparator.comparingInt(e -> e.w)); // 가중치의 오름차순으로 정렬
+        PriorityQueue<Edge> pq = new PriorityQueue<>(new Comparator<Edge>() {
+            @Override
+            public int compare(Edge o1, Edge o2) {
+                return o1.w - o2.w;
+            }
+        });
 
+        pq.addAll(edges[1]);
+        visited[1] = true;
         int totalW = 0;
-        int cnt = 0;
-        for (int i=0; i<E; i++) {
-            int node1 = edges[i].node1;
-            int node2 = edges[i].node2;
-            int w = edges[i].w;
+        while (!pq.isEmpty()) {
+            Edge poll = pq.poll();
+            int to = poll.to;
+            int w = poll.w;
 
-            if (find(node1) == find(node2)) {
+            if (visited[to]) {
                 continue;
             }
 
-            union(node1, node2);
+            visited[to] = true;
             totalW += w;
-            cnt++;
-            if (cnt == V - 1) {
-                break;
+            for (Edge edge : edges[to]) {
+                if (visited[edge.to]) {
+                    continue;
+                }
+                pq.add(edge);
             }
         }
 
         System.out.println(totalW);
     }
-
-    private static void union(int node1, int node2) {
-        int p1 = find(node1);
-        int p2 = find(node2);
-
-        parent[p1] = Math.min(p1, p2);
-        parent[p2] = Math.min(p1, p2);
-    }
-
-    private static int find(int node) {
-        if (parent[node] == node) {
-            return node;
-        }
-
-        return parent[node] = find(parent[node]);
-    }
-
-
 }
