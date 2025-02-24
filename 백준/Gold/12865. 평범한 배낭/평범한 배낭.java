@@ -8,7 +8,7 @@ public class Main {
     static int K;
     static int[] Ws;
     static int[] Vs;
-    static int[][] dp;
+    static int[][] dp; // dp[n][k] : 무게가 k인 가방에 n번째 물품까지 담았을 때 최고 가치
 
     static BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 
