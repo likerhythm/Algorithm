@@ -18,7 +18,6 @@ public class Main {
         // 입력==================================
 
         int left = 0, right = 0;
-        int answerL = 0, answerR = 0;
         while (true) {
             if (countChar[getCharIdx(right)]++ == 0) {
                 count++;
@@ -36,8 +35,6 @@ public class Main {
             }
 
             if (answer < right - left + 1) {
-                answerL = left;
-                answerR = right;
                 answer = right - left + 1;
             }
             answer = Math.max(answer, right - left + 1);
@@ -48,9 +45,6 @@ public class Main {
 
             right++;
         }
-
-//        System.out.println("answerL=" + answerL);
-//        System.out.println("answerR=" + answerR);
         System.out.println(answer);
     }
 
