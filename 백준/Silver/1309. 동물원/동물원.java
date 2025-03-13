@@ -11,11 +11,6 @@ public class Main {
         int[] dp1 = new int[N]; // dp1[i] : i행 사자를 놓을 때 사자를 배치하는 최대 경우의 수
         int[] dp2 = new int[N]; // dp2[i] : i행 사자를 놓지 않을 때 사자를 배치하는 최대 경우의 수
 
-        if (N == 1) {
-            System.out.println(3);
-            return;
-        }
-
         dp1[0] = 2;
         dp2[0] = 1;
 
