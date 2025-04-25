@@ -1,100 +1,104 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.StringTokenizer;
+import java.util.*;
+import java.io.*;
 
 public class Main {
-	static int[] arr, minTree, maxTree;
 
-	public static void main(String[] args) throws NumberFormatException, IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-		StringTokenizer st = new StringTokenizer(br.readLine());
+    static int N; // 정수의 개수
+    static int M; // 구간 개수
+    static int[] nums;
 
-		int N = Integer.parseInt(st.nextToken());
-		int M = Integer.parseInt(st.nextToken());
+    static class SegmentTree {
 
-		arr = new int[N + 1];
-		for (int i = 1; i <= N; i++) {
-			arr[i] = Integer.parseInt(br.readLine());
-		}
+        final int MAX = 1_000_000_001;
+        final int MIN = 0;
+        int tree[][]; // 최소, 최대
+        int size;
 
-		minTree = new int[N * 4];
-		maxTree = new int[N * 4];
+        SegmentTree(int numCount) {
+            int h = (int) Math.ceil(Math.log(numCount) / Math.log(2));
+            int treeSize = (int) Math.pow(2, h + 1);
+            tree = new int[treeSize][2];
+            this.size = treeSize;
+        }
 
-		minInit(1, N, 1);
-		maxInit(1, N, 1);
+        int[] init(int node, int start, int end) {
+            if (start == end) {
+                return tree[node] = new int[] {nums[start], nums[start]};
+            }
 
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < M; i++) {
-			st = new StringTokenizer(br.readLine());
+            int mid = (start + end) / 2;
 
-			int left = Integer.parseInt(st.nextToken());
-			int right = Integer.parseInt(st.nextToken());
+            int[] left = init(node * 2, start, mid);
+            int[] right = init(node * 2 + 1, mid + 1, end);
 
-			sb.append(minFind(1, N, 1, left, right) + " " + maxFind(1, N, 1, left, right) + "\n");
-		}
+            return tree[node] = new int[] {Math.min(left[0], right[0]), Math.max(left[1], right[1])};
+        }
 
-		bw.write(sb.toString());
-		bw.flush();
-		bw.close();
-		br.close();
-	}
+        int findMin(int node, int start, int end, int targetStart, int targetEnd) {
+            if (targetEnd < start || end < targetStart) {
+                return MAX;
+            }
 
-	// 각 구간 별로 최솟값을 저장.
-	public static int minInit(int start, int end, int node) {
-		if (start == end) {
-			return minTree[node] = arr[start];
-		}
+            if (targetStart <= start && end <= targetEnd) {
+                return tree[node][0];
+            }
 
-		int mid = (start + end) / 2;
-		return minTree[node] = Math.min(minInit(start, mid, node * 2), minInit(mid + 1, end, node * 2 + 1));
-	}
+            int mid = (start + end) / 2;
+            return Math.min(findMin(node * 2, start, mid, targetStart, targetEnd),
+                           findMin(node * 2 + 1, mid + 1, end, targetStart, targetEnd));
+        }   
 
-	// 각 구간 별로 최댓값을 저장.
-	public static int maxInit(int start, int end, int node) {
-		if (start == end) {
-			return maxTree[node] = arr[start];
-		}
+        int findMax(int node, int start, int end, int targetStart, int targetEnd) {
+            if (targetEnd < start || end < targetStart) {
+                return MIN;
+            }
 
-		int mid = (start + end) / 2;
-		return maxTree[node] = Math.max(maxInit(start, mid, node * 2), maxInit(mid + 1, end, node * 2 + 1));
-	}
+            if (targetStart <= start && end <= targetEnd) {
+                return tree[node][1];
+            }
 
-	// left ~ right 범위 내에 최솟값을 찾음.
-	public static int minFind(int start, int end, int node, int left, int right) {
-		// 범위를 벗어난 경우
-		if (right < start || end < left) {
-			return Integer.MAX_VALUE;
-		}
+            int mid = (start + end) / 2;
+            return Math.max(findMax(node * 2, start, mid, targetStart, targetEnd),
+                           findMax(node * 2 + 1, mid + 1, end, targetStart, targetEnd));
+        }
 
-		// 범위 안에 있는 경우
-		if (left <= start && end <= right) {
-			return minTree[node];
-		}
+        void print() {
+            for (int i=0; i<size; i++) {
+                System.out.print(Arrays.toString(tree[i]));
+            }
+            System.out.println();
+        }
+    }
+    
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st = new StringTokenizer(br.readLine());
 
-		int mid = (start + end) / 2;
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
 
-		return Math.min(minFind(start, mid, node * 2, left, right), minFind(mid + 1, end, node * 2 + 1, left, right));
-	}
+        nums = new int[N + 1];
 
-	// left ~ right 범위 내에 최댓값을 찾음.
-	public static int maxFind(int start, int end, int node, int left, int right) {
-		// 범위를 벗어난 경우
-		if (right < start || end < left) {
-			return Integer.MIN_VALUE;
-		}
+        for (int i=1; i<=N; i++) { // 수 입력
+            nums[i] = Integer.parseInt(br.readLine());
+        }
 
-		// 범위 안에 있는 경우
-		if (left <= start && end <= right) {
-			return maxTree[node];
-		}
+        SegmentTree segTree = new SegmentTree(N);
+        segTree.init(1, 1, N);
+        // st.print();
 
-		int mid = (start + end) / 2;
-
-		return Math.max(maxFind(start, mid, node * 2, left, right), maxFind(mid + 1, end, node * 2 + 1, left, right));
-	}
-
+        StringBuilder answer = new StringBuilder();
+        for (int m=0; m<M; m++) { // 로직 수행
+            st = new StringTokenizer(br.readLine());
+            int targetStart = Integer.parseInt(st.nextToken());
+            int targetEnd = Integer.parseInt(st.nextToken());
+            answer.append(segTree.findMin(1, 1, N, targetStart, targetEnd)).append(" ");
+            answer.append(segTree.findMax(1, 1, N, targetStart, targetEnd)).append("\n");
+        }
+        bw.write(answer.toString());
+        bw.flush();
+        bw.close();
+        br.close();
+    }
 }
