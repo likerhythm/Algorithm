@@ -25,12 +25,7 @@ public class Main {
             ladder[b][a] = true;
         }
 
-        if (canGo()) {
-            System.out.println(0);
-            return;
-        }
-
-        for (int cnt=1; cnt<=3; cnt++) {
+        for (int cnt=0; cnt<=3; cnt++) {
             boolean flag = setLadders(0, 0, cnt);
             if (flag) {
                 answer = cnt;
