@@ -33,7 +33,7 @@ public class Main {
             int nx = x + dxs[d];
             int ny = y + dys[d];
             
-            if (nx < 0 || nx >= 29 || ny < 0 || ny >= 29) continue; // 범위 체크
+            if (!inRange(nx, ny)) continue; // 범위 체크
             
             if (visited[nx][ny]) { // 이미 방문한 위치인 경우
                 continue;
@@ -43,5 +43,9 @@ public class Main {
             f(nx, ny, cnt + 1, p * prob[d]);
             visited[nx][ny] = false;
         }
+    }
+
+    static boolean inRange(int x, int y) {
+        return 0 <= x && x < 29 && 0 <= y && y < 29;
     }
 }
