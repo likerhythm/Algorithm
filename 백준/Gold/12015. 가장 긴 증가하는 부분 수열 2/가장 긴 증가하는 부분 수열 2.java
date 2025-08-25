@@ -33,11 +33,11 @@ public class Main {
         int right = tails.size() - 1;
         int target = tails.size() - 1;
 
-        while (left <= right) {
+        while (left < right) {
             int mid = (left + right) / 2;
 
             if (tails.get(mid) > a) {
-                right = mid - 1;
+                right = mid;
                 target = mid;
             } else if (tails.get(mid) < a) {
                 left = mid + 1;
