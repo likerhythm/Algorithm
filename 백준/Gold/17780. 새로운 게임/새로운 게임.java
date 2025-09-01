@@ -73,14 +73,6 @@ public class Main {
             horses.peekLast().reverseD();
         }
 
-        public D getDirection() {
-            if (!isReverse) {
-                return horses.peekFirst().d;
-            }
-
-            return horses.peekLast().d;
-        }
-
         public void removeHorses() {
             horses.clear();
         }
@@ -123,27 +115,6 @@ public class Main {
             return horses.peekFirst().idx == horse.idx;
         }
 
-        @Override
-        public String toString() {
-            StringBuilder sb = new StringBuilder();
-            sb.append("[");
-            if (this.isReverse) {
-                for (int i = horses.size() - 1; i >= 0; i--) {
-                    Horse horse = horses.pollLast();
-                    sb.append(horse.idx);
-                    horses.addFirst(horse);
-                }
-            } else {
-                for (int i = 0; i < horses.size(); i++) {
-                    Horse horse = horses.pollFirst();
-                    sb.append(horse.idx);
-                    horses.addLast(horse);
-                }
-            }
-            sb.append("]");
-            return sb.toString();
-        }
-
         public boolean isDone() {
             return horses.size() >= 4;
         }
@@ -182,7 +153,6 @@ public class Main {
         int[] dys = {1, -1, 0, 0};
 
         int turn = -1;
-//        printNodes();
         outer : while (true) {
             turn++;
             if (turn >= 1000) {
@@ -191,7 +161,6 @@ public class Main {
             }
 
             for (int horseIdx = 0; horseIdx < K; horseIdx++) {
-//                System.out.println("horseIdx = " + horseIdx);
                 Horse horse = horses[horseIdx];
                 int x = horse.x, y = horse.y;
                 if (nodes[x][y].isBot(horse)) {
@@ -205,7 +174,6 @@ public class Main {
                         nx = x + dxs[d.ordinal()];
                         ny = y + dys[d.ordinal()];
                         if (!inRange(nx, ny) || map[nx][ny] == BLUE) {
-//                            printNodes();
                             continue;
                         }
                     }
@@ -215,7 +183,6 @@ public class Main {
                     }
 
                     nodes[nx][ny].union(nodes[x][y]);
-//                    printNodes();
                     if (nodes[nx][ny].isDone()) {
                         break outer;
                     }
@@ -228,12 +195,5 @@ public class Main {
 
     private static boolean inRange(int x, int y) {
         return 0 <= x && x < N && 0 <= y && y < N;
-    }
-
-    private static void printNodes() {
-        for (Node[] n : nodes) {
-            System.out.println(Arrays.toString(n));
-        }
-        System.out.println();
     }
 }
