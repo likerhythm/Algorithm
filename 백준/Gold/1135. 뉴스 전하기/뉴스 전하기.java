@@ -30,11 +30,10 @@ public class Main {
         }
 
         System.out.println(dfs(0));
-//        System.out.println(Arrays.toString(dp));
     }
 
     private static int dfs(int now) {
-        if (graph[now].isEmpty()) { // 말단 직원인 경우
+        if (graph[now].isEmpty()) {
 
             return dp[now] = 0;
         }
