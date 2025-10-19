@@ -1,11 +1,5 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.io.*;
+import java.util.*;
 
 public class Main {
 
@@ -83,28 +77,10 @@ public class Main {
                 visited[a[0]][a[1]] = false;
             }
 
-//            printMap();
-//            printPool(pool);
-
             return (minHeight - h) * pool.size();
         }
 
         return 0;
-    }
-
-    private static void printPool(List<int[]> pool) {
-        System.out.print("pool = [");
-        for (int[] a : pool) {
-            System.out.print(Arrays.toString(a) + ", ");
-        }
-        System.out.println("]");
-    }
-
-    private static void printMap() {
-        for (int[] m : map) {
-            System.out.println(Arrays.toString(m));
-        }
-        System.out.println();
     }
 
     private static boolean inRange(int n, int m) {
