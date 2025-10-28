@@ -6,23 +6,14 @@ public class Main {
 
     static int N;
     static int[][] arr;
-    static int[][][] dp;
-    static final int INF = 200;
+    static boolean[][][] dp;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         N = Integer.parseInt(br.readLine());
         arr = new int[N + 1][N + 1];
-        dp = new int[1 << N][N + 1][N + 1];
-
-        for (int i = 0; i < (1 << N); i++) {
-            for (int j = 0; j <= N; j++) {
-                for (int k = 0; k <= N; k++) {
-                    if (j != k) dp[i][j][k] = INF;
-                }
-            }
-        }
+        dp = new boolean[1 << N][N + 1][N + 1];
 
         for (int i = 1; i <= N; i++) {
             String line = br.readLine();
@@ -46,11 +37,10 @@ public class Main {
             if ((bit & (1 << (i - 1))) != 0 || arr[idx][i] < num) continue;
 
             int nextBit = bit | (1 << (i - 1));
-
-            // 이미 더 작은 가격으로 방문했으면 가지치기
-            if (dp[nextBit][idx][i] == arr[idx][i]) continue;
-
-            dp[nextBit][idx][i] = arr[idx][i];
+            // 현재 상태를 이미 겪은 경우 패스
+            if (dp[nextBit][idx][i]) continue;
+            
+            dp[nextBit][idx][i] = true;
 
             // 재귀 호출 후 최대 사람 수 갱신
             maxPeople = Math.max(maxPeople, getDP(i, people + 1, nextBit, arr[idx][i]));
