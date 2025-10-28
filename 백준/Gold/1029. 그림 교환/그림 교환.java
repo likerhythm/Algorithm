@@ -48,7 +48,7 @@ public class Main {
             int nextBit = bit | (1 << (i - 1));
 
             // 이미 더 작은 가격으로 방문했으면 가지치기
-            if (dp[nextBit][idx][i] <= arr[idx][i]) continue;
+            if (dp[nextBit][idx][i] == arr[idx][i]) continue;
 
             dp[nextBit][idx][i] = arr[idx][i];
 
