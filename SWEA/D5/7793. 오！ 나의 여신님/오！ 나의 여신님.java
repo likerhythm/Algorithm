@@ -15,7 +15,6 @@ public class Solution {
     static boolean[][] humanVisited;
     static int[] start;
     static int answer;
-    static int a;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
