@@ -19,19 +19,14 @@ public class Main {
     }
 
     private static void backtracking(int n, int m, int cnt, int preDir) {
-//        System.out.println("[" + n + ", " + m + "] 방문");
         if (visited[n][m]) {
             if (cnt == N) {
-//                System.out.println("==========성공");
                 answer++;
             }
             return;
         }
 
-        if (cnt == N) {
-//            System.out.println("==========실패");
-            return;
-        }
+        if (cnt == N) return;
 
         visited[n][m] = true;
         for (int nowDir = 0; nowDir < 6; nowDir++) {
