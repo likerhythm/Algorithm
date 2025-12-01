@@ -33,20 +33,7 @@ public class Main {
             }
         }
 
-//        printDp(0);
-//        printDp(1);
-//        printDp(2);
         System.out.println(dp[N - 1][N - 1][0] + dp[N - 1][N - 1][1] + dp[N - 1][N - 1][2]);
-    }
-
-    private static void printDp(int dir) {
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                System.out.print(dp[i][j][dir] + " ");
-            }
-            System.out.println();
-        }
-        System.out.println();
     }
 
     private static void setDp2(int i, int j) {
