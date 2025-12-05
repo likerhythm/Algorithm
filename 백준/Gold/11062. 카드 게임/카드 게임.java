@@ -34,7 +34,7 @@ public class Main {
      *
      * @param left: 지금 선택할 수 있는 카드 중 왼쪽 카드의 인덱스
      * @param right: 지금 선택할 수 있는 카드 중 오른쪽 카드의 인덱스
-     * @return
+     * @return: left, right 상황일 때 근우가 얻을 수 있는 최대 점수
      */
     private static int pick(int left, int right, boolean isGeunwoo) {
         if (left > right) {
