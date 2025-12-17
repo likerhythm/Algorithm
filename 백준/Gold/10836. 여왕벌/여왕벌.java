@@ -1,14 +1,13 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
 
     static int N; // 벌집의 가로 세로 크기
     static int M; // 진행 날짜 수
-    static int[] initIncrements;
+    static int[] line; // 테두리 성장치를 저장할 배열 (크기: 2*N - 1)
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -16,37 +15,42 @@ public class Main {
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
 
-        initIncrements = new int[2 * N - 1];
+        line = new int[2 * N];
+
         for (int i = 0; i < M; i++) {
-            int[] input = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
-            int idx = 0;
-            for (int j = 0; j < 3; j++) {
-                while (input[j] > 0) {
-                    initIncrements[idx++] += j;
-                    input[j] -= 1;
-                }
+            st = new StringTokenizer(br.readLine());
+            int zeroCnt = Integer.parseInt(st.nextToken());
+            int oneCnt = Integer.parseInt(st.nextToken());
+            int twoCnt = Integer.parseInt(st.nextToken());
+
+            int oneStartIdx = zeroCnt;
+
+            int twoStartIdx = zeroCnt + oneCnt;
+
+            if (oneStartIdx < 2 * N - 1) {
+                line[oneStartIdx]++;
+            }
+            if (twoStartIdx < 2 * N - 1) {
+                line[twoStartIdx]++;
             }
         }
 
-        int[][] realIncrements = new int[N][N];
-        for (int i = N - 1; i >= 0; i--) {
-            realIncrements[i][0] = initIncrements[N - 1 - i];
-        }
-        for (int i = 1; i < N; i++) {
-            realIncrements[0][i] = initIncrements[N + i - 1];
+        int currentGrowth = 0;
+        for (int i = 0; i < 2 * N - 1; i++) {
+            currentGrowth += line[i];
+            line[i] = currentGrowth;
         }
 
-        for (int i = 1; i < N; i++) {
-            for (int j = 1; j < N; j++) {
-                realIncrements[i][j] = realIncrements[0][j];
-            }
-        }
+        StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                System.out.print(1 + realIncrements[i][j] + " ");
+            sb.append(line[(N - 1) - i] + 1).append(" ");
+            for (int j = 1; j < N; j++) {
+                sb.append(line[(N - 1) + j] + 1).append(" ");
             }
-            System.out.println();
+            sb.append("\n");
         }
+
+        System.out.print(sb);
     }
 }
