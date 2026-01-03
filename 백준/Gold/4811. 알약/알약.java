@@ -9,7 +9,6 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        StringBuilder sb = new StringBuilder();
         String line;
 
         while ((line = br.readLine()) != null) {
@@ -19,19 +18,15 @@ public class Main {
         }
     }
 
-    private static long dfs(int whole, int half) {
-        if (whole == 0) return 1;
+    private static long dfs(int open, int close) {
+        if (open == 0) return 1;
 
-        if (dp[whole][half] > 0) return dp[whole][half];
+        if (dp[open][close] > 0) return dp[open][close];
 
         long count = 0;
+        count += dfs(open - 1, close + 1);
+        if (close > 0) count += dfs(open, close - 1);
 
-        count += dfs(whole - 1, half + 1);
-
-        if (half > 0) {
-            count += dfs(whole, half - 1);
-        }
-
-        return dp[whole][half] = count;
+        return dp[open][close] = count;
     }
 }
