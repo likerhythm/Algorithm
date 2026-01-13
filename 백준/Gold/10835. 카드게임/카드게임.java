@@ -17,6 +17,9 @@ public class Main {
         rightCards = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
 
         dp = new int[N][N];
+        for (int[] d : dp) {
+            Arrays.fill(d, -1);
+        }
 
         System.out.println(setDp(0, 0));
     }
@@ -24,8 +27,9 @@ public class Main {
     private static int setDp(int left, int right) {
         if (left == N || right == N) return 0;
 
-        if (dp[left][right] > 0) return dp[left][right];
-
+        if (dp[left][right] > -1) return dp[left][right];
+        
+        dp[left][right] = 0;
         dp[left][right] = Math.max(dp[left][right], setDp(left + 1, right));
         dp[left][right] = Math.max(dp[left][right], setDp(left + 1, right + 1));
         if (leftCards[left] > rightCards[right]) dp[left][right] = Math.max(dp[left][right], setDp(left, right + 1) + rightCards[right]);
