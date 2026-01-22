@@ -1,9 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -30,28 +27,13 @@ public class Main {
             graph[a][b] = Math.max(graph[a][b], c);
         }
 
-//        Queue<Integer> q = new LinkedList<>();
-//        q.add(1);
-//        while (!q.isEmpty()) {
-//            int now = q.poll();
-//            for (int next = now; next <= N; next++) {
-//                if (graph[now][next] == 0) continue;
-//                if (dp[next] > dp[now] + graph[now][next]) continue;
-//                dp[next] = dp[now] + graph[now][next];
-//                q.add(next);
-//            }
-//        }
-
         System.out.println(setDp(1, 1));
-//        for (int[] d : dp) {
-//            System.out.println(Arrays.toString(d));
-//        }
     }
 
     private static int setDp(int now, int count) {
         if (count > M) return -1;
         if (now == N) return 0;
-        
+
         if (dp[now][count] != 0) return dp[now][count];
 
         boolean flag = false;
