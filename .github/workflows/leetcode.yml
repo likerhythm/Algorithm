@@ -1,0 +1,48 @@
+name: Organize LeetCode Solutions
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  organize:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Move new LeetCode folders
+        shell: bash
+        run: |
+          set -e
+          shopt -s nullglob
+          TARGET="leetcode"
+          mkdir -p "$TARGET"
+
+          moved=0
+          for entry in [0-9]*; do
+            [ "$entry" = "Algorithm" ] && continue
+            base="$(basename "$entry")"
+            rm -rf "${TARGET:?}/$base"
+            mv "$entry" "$TARGET/"
+            echo "moved: $entry -> $TARGET/"
+            moved=$((moved+1))
+          done
+
+          echo "MOVED=$moved" >> "$GITHUB_ENV"
+
+      - name: Commit & push
+        if: env.MOVED != '0'
+        shell: bash
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "변경 사항 없음"; exit 0
+          fi
+          git commit -m "chore: move leetcode solutions to Algorithm/leetcode [skip ci]"
+          git push
