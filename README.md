@@ -35,14 +35,17 @@
 | ------- |
 | [0003-longest-substring-without-repeating-characters](https://github.com/likerhythm/Algorithm/tree/master/0003-longest-substring-without-repeating-characters) |
 | [0005-longest-palindromic-substring](https://github.com/likerhythm/Algorithm/tree/master/0005-longest-palindromic-substring) |
+| [0022-generate-parentheses](https://github.com/likerhythm/Algorithm/tree/master/0022-generate-parentheses) |
 | [0126-word-ladder-ii](https://github.com/likerhythm/Algorithm/tree/master/0126-word-ladder-ii) |
 ## Dynamic Programming
 |  |
 | ------- |
 | [0005-longest-palindromic-substring](https://github.com/likerhythm/Algorithm/tree/master/0005-longest-palindromic-substring) |
+| [0022-generate-parentheses](https://github.com/likerhythm/Algorithm/tree/master/0022-generate-parentheses) |
 ## Backtracking
 |  |
 | ------- |
+| [0022-generate-parentheses](https://github.com/likerhythm/Algorithm/tree/master/0022-generate-parentheses) |
 | [0126-word-ladder-ii](https://github.com/likerhythm/Algorithm/tree/master/0126-word-ladder-ii) |
 ## Breadth-First Search
 |  |
