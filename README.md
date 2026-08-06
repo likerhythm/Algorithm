@@ -8,6 +8,7 @@
 | ------- |
 | [0001-two-sum](https://github.com/likerhythm/Algorithm/tree/master/0001-two-sum) |
 | [0033-search-in-rotated-sorted-array](https://github.com/likerhythm/Algorithm/tree/master/0033-search-in-rotated-sorted-array) |
+| [0289-game-of-life](https://github.com/likerhythm/Algorithm/tree/master/0289-game-of-life) |
 ## Hash Table
 |  |
 | ------- |
@@ -59,4 +60,12 @@
 |  |
 | ------- |
 | [0033-search-in-rotated-sorted-array](https://github.com/likerhythm/Algorithm/tree/master/0033-search-in-rotated-sorted-array) |
+## Matrix
+|  |
+| ------- |
+| [0289-game-of-life](https://github.com/likerhythm/Algorithm/tree/master/0289-game-of-life) |
+## Simulation
+|  |
+| ------- |
+| [0289-game-of-life](https://github.com/likerhythm/Algorithm/tree/master/0289-game-of-life) |
 <!---LeetCode Topics End-->
